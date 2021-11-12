@@ -48,6 +48,7 @@ namespace weatherApp
 
         private void LabelFill()
         {
+            // changes background based of current weather
             if (Convert.ToInt32(Form1.days[0].outdoorCondition) >= 200
                 && Convert.ToInt32(Form1.days[0].outdoorCondition) < 600)
             {
@@ -63,18 +64,20 @@ namespace weatherApp
                 this.BackgroundImage = clear;
             }
 
-
+            // displayes current days info
             cWeatherOutput.Text = $"Current Temp: {Rounder(Form1.days[0].currentTemp)}°C";
             maxOutput.Text = $"High: {Rounder(Form1.days[0].tempHigh)}°C";
             minOutput.Text = $"Low: {Rounder(Form1.days[0].tempLow)}°C";
             locationOutput.Text = Form1.days[0].location;
             todayDateOutput.Text = Form1.days[0].date;
 
+            // cleares forecast
             foreDateOutput.Text = "";
             foreMaxOutput.Text = "";
             foreMinOutput.Text = "";
             WeatherIconOutput.Text = "";
 
+            // adds data to screen
             for (int i = 1; i < Form1.days.Count() - 1; i++)
             {
                 foreDateOutput.Text += Form1.days[i].date;
@@ -86,6 +89,7 @@ namespace weatherApp
                 foreMinOutput.Text += $"{Rounder(Form1.days[i].tempLow)}°C";
                 foreMinOutput.Text += "\n \n";
 
+                // displayes weather of day as a symbol
                 if (Convert.ToInt32(Form1.days[i].outdoorCondition) >= 200
                  && Convert.ToInt32(Form1.days[i].outdoorCondition) < 600)
                 {
@@ -104,7 +108,7 @@ namespace weatherApp
 
             }
         }
-
+        // gets the forcast for the city entered
         private void ExtractForecast(string city)
         {
             XmlReader reader = XmlReader.Create($"http://api.openweathermap.org/data/2.5/forecast/daily?q={city}&mode=xml&units=metric&cnt=7&appid=3f2e224b815c0ed45524322e145149f0");
@@ -129,7 +133,7 @@ namespace weatherApp
                 Form1.days.Add(newDay);
             }
         }
-
+        // gets current info from the city entered
         private void ExtractCurrent(string city)
         {
             // current info is not included in forecast file so we need to use this file to get it
